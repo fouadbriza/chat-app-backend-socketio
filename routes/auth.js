@@ -5,8 +5,12 @@ const authController = require('../controllers/authController')
 router.post('/api/signup', authController.localSignup);
 router.post('/api/login', authController.localLogin);
 
-router.post('/api/google', authController.google);
-router.post('/api/google/redirect', authController.google);
+
+
+module.exports = router;
+
+//router.post('/api/google', authController.google);
+//router.post('/api/google/redirect', authController.google);
 
 
 

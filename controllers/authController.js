@@ -19,7 +19,7 @@ exports.localSignup = async (req, res, next) => {
       password: password,
     });
     await newUser.save();
-    return res.status(201).json({ message: "User created succefully" });
+    return res.status(201).json({ message: "User created succefully" /*, newUser (for testing)*/});
   } catch (err) {
     next(err);
   }
@@ -32,10 +32,11 @@ exports.localLogin = async (req, res, next) => {
     if (!username || !password) {
       return res.status(400).json({ message: "both username and password are required " });
     }
-    const theuser = await User.findOne({ username });
+    const theuser = await User.findOne({ username }).select('+password'); //to include password field (because i made it hidden in the model)
     if (!theuser) {
       return res.status(404).json({ message: "User not found" });
     }
+    console.log(theuser)
     const samePassword = await theuser.comparePassword(password);
     if (!samePassword) {
       return res.status(404).json({ message: "wrong username or password" });
@@ -57,6 +58,6 @@ exports.localLogin = async (req, res, next) => {
   }
 };
 
-exports.localLogin;
-exports.googleRedirect;
-exports.googleCallback;
+
+//exports.googleRedirect;
+//exports.googleCallback;
