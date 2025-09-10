@@ -41,7 +41,7 @@ exports.localLogin = async (req, res, next) => {
     if (!samePassword) {
       return res.status(404).json({ message: "wrong username or password" });
     }
-    const token = jwt.sign({ userId: theuser._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: theuser._id, username: theuser.username }, process.env.JWT_SECRET, {
       expiresIn: "24h",
     });
 

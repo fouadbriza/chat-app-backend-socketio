@@ -8,20 +8,50 @@ const auth = require("./routes/auth");
 const userRoutes = require("./routes/userRoutes");
 const mongoose = require("mongoose");
 const verifyToken = require("./middleware/verifyToken");
-
 app.use(express.json());
+const setupSocket = require('./setupSocket');
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
+//Server: Socket.IO’s server class   // server: http main server
+const http = require("http");
+const { Server } = require("socket.io");
+const server = http.createServer(app); //main server creation
+
+// Create a new Socket.IO Server instance (io) from the Socket.IO Server class (Server) and attaching it to our existing HTTP server (server) created with http.createServer(app) so Socket.IO automatically detects HTTP requests with `Upgrade: websocket` and perform the WebSocket handshake following the settings in the second argument object
+
+const io = new Server(server, {
+  cors: { origin: `${process.env.FRONTEND_ORIGIN}` , methods: ["GET", "POST"] },
+  pingTimeout: 30000,
+  pingInterval: 25000,
+});
+
+mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log("MongoDB connected");
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server started successfully at ${PORT}`);
     });
   })
   .catch((err) => console.error("MongoDB connection error:", err));
 
-app.use("/", verifyToken, auth);
-app.use("/", userRoutes);
 
+//Rest  
+app.use("/", auth);
+app.use("/",verifyToken, userRoutes);
 app.use(errorHandler);
+
+
+
+//Socket.IO
+setupSocket(io);
+
+
+
+
+
+
+/*const newMessage = new Message({
+  from: socket.username,
+  message: msg,
+  timestamp: new Date()
+});
+await newMessage.save();
+*/
