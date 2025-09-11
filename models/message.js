@@ -2,9 +2,11 @@ const mongoose = require('mongoose');
 
 const message = mongoose.Schema({
     from: String,
-    to: String,
+    to: { type: String, required: true },
     message: String,
-    timestamp: Date
+    timestamp: Date,
+    delivered:Boolean,
+    read:Boolean
 });
 
-module.exports = mongoose.model('message' , message);
+module.exports = mongoose.model('Message' , message);

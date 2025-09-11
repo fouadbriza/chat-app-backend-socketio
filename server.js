@@ -19,7 +19,7 @@ const server = http.createServer(app); //main server creation
 // Create a new Socket.IO Server instance (io) from the Socket.IO Server class (Server) and attaching it to our existing HTTP server (server) created with http.createServer(app) so Socket.IO automatically detects HTTP requests with `Upgrade: websocket` and perform the WebSocket handshake following the settings in the second argument object
 
 const io = new Server(server, {
-  cors: { origin: `${process.env.FRONTEND_ORIGIN}` , methods: ["GET", "POST"] },
+  cors: { origin: '*' /*origin: `${process.env.FRONTEND_ORIGIN}`*/ , methods: ["GET", "POST"] },
   pingTimeout: 30000,
   pingInterval: 25000,
 });
