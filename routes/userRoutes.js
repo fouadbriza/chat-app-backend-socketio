@@ -4,8 +4,8 @@ const userController = require('../controllers/userController');
 const verifyToken = require('../middleware/verifyToken');
 
 
-router.get('/api/me', userController.me);
-router.post('api/edit', userController.edit)
+router.get('/me', userController.me);
+router.post('/edit', userController.edit)
 
 
 

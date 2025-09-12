@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController')
 
-router.post('/api/signup', authController.localSignup);
-router.post('/api/login', authController.localLogin);
+router.post('/signup', authController.localSignup);
+router.post('/login', authController.localLogin);
 
 
 

@@ -6,7 +6,7 @@ const message = mongoose.Schema({
     message: String,
     timestamp: Date,
     delivered:Boolean,
-    read:Boolean
+    read:Boolean,
 });
 
 module.exports = mongoose.model('Message' , message);
