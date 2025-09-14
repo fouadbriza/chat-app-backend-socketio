@@ -4,7 +4,7 @@ const authController = require('../controllers/authController')
 
 router.post('/signup', authController.localSignup);
 router.post('/login', authController.localLogin);
-
+router.get('/google/callback', authController.google); // OAuth2
 
 
 module.exports = router;

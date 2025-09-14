@@ -48,7 +48,6 @@ const setupSocket = (io) => {
       }
     });
 
-
     //this handles the message being read (add read status)
     socket.on("readMessage", async ({ messageId }) => {
       await Message.updateOne({ _id: messageId }, { $set: { read: true } });
